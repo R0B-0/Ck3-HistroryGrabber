@@ -33,3 +33,7 @@ The scripts will do its thing and results will be printed to the output file (00
 
 
 Perfect for quickly scaffolding title history files without manually typing every block.
+
+
+
+Requires python to be able to run
