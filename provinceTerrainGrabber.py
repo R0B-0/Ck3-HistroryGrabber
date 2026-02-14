@@ -3,6 +3,12 @@ import os
 import sys
 from collections import OrderedDict
 
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+INPUT_FILE = os.path.join(SCRIPT_DIR, "00_Input.txt")
+OUTPUT_FILE = os.path.join(SCRIPT_DIR, "00_Output.txt")
+
 def read_text_safely(path):
     # Try a few common encodings CK3 mod files often use
     encodings = ["utf-8-sig", "utf-8", "utf-16-le", "utf-16-be", "cp1252"]
@@ -21,15 +27,12 @@ def read_text_safely(path):
         return f.read().decode("utf-8", errors="ignore")
 
 def main():
-    input_file = sys.argv[1] if len(sys.argv) > 1 else "00_Input.txt"
-    output_file = "00_Output.txt"
-
-    if not os.path.exists(input_file):
-        print(f"Missing {input_file}! Put it next to this script or pass a path as the first argument.")
+    if not os.path.exists(INPUT_FILE):
+        print(f"Missing {INPUT_FILE}! Put it next to this script or pass a path as the first argument.")
         input("Press Enter to exit...")
         raise SystemExit(1)
 
-    text = read_text_safely(input_file)
+    text = read_text_safely(INPUT_FILE)
 
     # Strip inline comments beginning with # (CK3 uses # for comments)
     text_nocomments = re.sub(r'(?m)#.*$', '', text)
@@ -45,18 +48,18 @@ def main():
             province_ids[pid] = None
 
     # Write output
-    with open(output_file, "w", encoding="utf-8") as f:
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         for pid in province_ids.keys():
             f.write(f"{pid}=\n")
 
-    print(f"Scanned: {input_file}")
+    print(f"Scanned: {INPUT_FILE}")
     print(f"Found {len(province_ids)} unique province ids.")
     if province_ids:
         # Show a tiny preview
         sample = list(province_ids.keys())[:10]
         print("Preview:", ", ".join(pid + "=" for pid in sample))
 
-    print(f"Saved: {output_file}")
+    print(f"Saved: {OUTPUT_FILE}")
     input("Press Enter to exit...")
 
 if __name__ == "__main__":

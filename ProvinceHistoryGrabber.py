@@ -2,16 +2,18 @@ import re
 import os
 
 # Input and output file paths
-input_file = "00_Input.txt"
-output_file = "00_Output.txt"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+INPUT_FILE = os.path.join(SCRIPT_DIR, "00_Input.txt")
+OUTPUT_FILE = os.path.join(SCRIPT_DIR, "00_Output.txt")
 
 # Read the input
-if not os.path.exists(input_file):
-    print(f"Missing {input_file}! Please put it in the same folder as this script.")
+if not os.path.exists(INPUT_FILE):
+    print(f"Missing {INPUT_FILE}! Please put it in the same folder as this script.")
     input("Press Enter to exit...")
     exit()
 
-with open(input_file, "r", encoding="utf-8") as f:
+with open(INPUT_FILE, "r", encoding="utf-8") as f:
     lines = f.readlines()
 
 current_kingdom = None
@@ -52,7 +54,7 @@ for line in lines:
         )
 
 # Write the output
-with open(output_file, "w", encoding="utf-8") as f:
+with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
     for kingdom in kingdom_order:
         kingdom_name = kingdom.replace('_', ' ').replace('-', ' ').title()
         f.write(f"\n{'#'*49}\n# {kingdom_name}\n{'#'*49}\n")
@@ -62,5 +64,5 @@ with open(output_file, "w", encoding="utf-8") as f:
             f.writelines(duchy_entries[duchy])
             f.write("\n")
 
-print(f"Done! Output saved to {output_file}")
+print(f"Done! Output saved to {OUTPUT_FILE}")
 input("Press Enter to exit...")

@@ -1,8 +1,10 @@
 import os
 import re
 
-INPUT_FILE  = "00_Input.txt"
-OUTPUT_FILE = "00_Output.txt"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+INPUT_FILE = os.path.join(SCRIPT_DIR, "00_Input.txt")
+OUTPUT_FILE = os.path.join(SCRIPT_DIR, "00_Output.txt")
 
 
 def humanize(tag: str) -> str:
